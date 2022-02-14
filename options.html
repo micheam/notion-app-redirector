@@ -3,12 +3,32 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="options.css"> 
   </head>
   <body>
 
     <form>
-      <label for="workspace">Notion Workspace</label>
-      <input type="text" id="workspace" >
+      <section>
+        <label>Workspace:
+          <input type="text" id="workspace" placeholder="your-workspace-name" required="required">
+        </label>
+        <span>
+          Specify the name of the workspace to be redirected.
+          This add-on will not redirect requests to workspaces other than those specified here. 
+        </span>
+      </section>
+
+      <section>
+        <label style="display:block">Auto Close:
+          <input type="checkbox" id="autoClose" checked>
+        </label>
+        <span>
+          Automatically closes the tab after redirecting to the native app.
+          Note that if this option is enabled, the tab will be closed 
+          regardless of whether the redirection was successful or not.
+        </span>
+      </section>
+
       <button type="submit">Save</button>
     </form>
 
