@@ -1,25 +1,29 @@
-const wsKey = 'notion.app.redirector.workspace';
+const workspace = 'notion.app.redirector.workspace';
+const autoClose = 'notion.app.redirector.autoclosetab';
 
 /** @param {Event} e */
-const saveOptions = (e) => {
+let saveOptions = (e) => {
   e.preventDefault();
   browser.storage.sync.set({
-    [wsKey]: document.querySelector('#workspace').value
+    [workspace]: document.querySelector('#workspace').value,
+    [autoClose]: document.querySelector('#autoClose').checked
   });
 }
 
 const loadOptions = () => {
-  /** @param {Promise} result */
-  const setCurrentChoice = (result) => {
-    document.querySelector('#workspace').value = result[wsKey];
+  /** @param {Promise} options */
+  let setCurrentChoice = (options) => {
+    document.querySelector('#workspace').value = options[workspace];
+    document.querySelector('#autoClose').checked = options[autoClose];
   }
 
   /** @param {Error} err */
-  const onError = (err) => console.log(`Error: ${err}`);
+  let onError = (err) => console.log(`Error: ${err}`);
 
   /** @type {Promise} */
-  const getting = browser.storage.sync.get(wsKey);
+  let getting = browser.storage.sync.get();
 
+  // Execute
   getting.then(setCurrentChoice).catch(onError)
 }
 

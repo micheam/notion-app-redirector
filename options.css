@@ -1,0 +1,9 @@
+body {
+  padding: 1em;
+}
+
+section span {
+  display: block;
+  margin: 1em;
+  color: #000000ba;
+}
