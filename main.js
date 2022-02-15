@@ -1,15 +1,13 @@
 const workspace = 'notion.app.redirector.workspace';
 const autoClose = 'notion.app.redirector.autoclosetab';
+const cancelled = 'notion.app.redirector.cancelled';
 
 /** @type {Promise} */
 var getOptions = browser.storage.sync.get();
 getOptions.then((options) => {
   const curr = new URL(window.location.href)
   const regex = new RegExp('^https?://.*\.notion\.so/' + options[workspace] + '/.*')
-  if (!regex.test(curr.href)) {
-    Promise.reject("url unmatched") 
-  }
-  return options
+  return regex.test(curr.href) ? options : Promise.reject(cancelled) 
 
 }).then((options) => {
   const curr = new URL(window.location.href)
@@ -22,5 +20,7 @@ getOptions.then((options) => {
     window.close() 
   }
 
-}).catch((reason) => console.error(reason));
+}).catch((reason) => {
+  if (reason !== cancelled) { console.error(reason) }
+});
 
